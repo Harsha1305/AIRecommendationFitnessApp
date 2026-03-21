@@ -4,8 +4,8 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/user-fitness-db
-    username: postgres
-    password: root
+    username: username
+    password: password
 
   config:
     import: "optional:configserver:"
