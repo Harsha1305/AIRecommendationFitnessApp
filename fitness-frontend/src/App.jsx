@@ -147,7 +147,7 @@ function App() {
       // Then dispatch to Redux
       dispatch(setCredentials({ token, user: tokenData }));
 
-      console.log("✅ Token saved:", token.substring(0, 20) + "...");
+      console.log("Token saved:", token.substring(0, 20) + "...");
       console.log("✅ UserId saved:", tokenData.sub);
     }
   }, [token, tokenData]);

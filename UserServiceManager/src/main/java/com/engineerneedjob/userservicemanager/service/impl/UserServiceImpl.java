@@ -7,11 +7,13 @@ import com.engineerneedjob.userservicemanager.model.User;
 import com.engineerneedjob.userservicemanager.repo.UserRepository;
 import com.engineerneedjob.userservicemanager.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.toEntity(userRequest);
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setKeycloakId(userRequest.getKeycloakId());
+        log.info("save user {}", user);
         return userMapper.toResponse(userRepository.save(user));
     }
 
@@ -36,6 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean existByKeyCloakId(String keyCloakId) {
+        log.info("keycloakId:{}", keyCloakId);
         return userRepository.existsByKeycloakId(keyCloakId);
     }
 

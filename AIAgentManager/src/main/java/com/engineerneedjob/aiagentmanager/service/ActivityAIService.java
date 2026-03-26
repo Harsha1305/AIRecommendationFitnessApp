@@ -29,6 +29,7 @@ public class ActivityAIService {
 
     private AIRecommendation processAiResponse(ActivityResponse activity, String aiResponse) {
         try {
+            log.info("createDefaultRecommendation for ", activity.getActivityId());
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(aiResponse);
 
@@ -60,7 +61,7 @@ public class ActivityAIService {
             List<String> safety = extractSafetyGuidelines(analysisJson.path("safety"));
 
             return AIRecommendation.builder()
-                    .activityId(activity.getExternalActivityId())
+                    .activityId(activity.getActivityId())
                     .userId(activity.getUserId())
                     .activityType(activity.getActivityType())
                     .recommendation(fullAnalysis.toString().trim())
@@ -77,8 +78,9 @@ public class ActivityAIService {
     }
 
     private AIRecommendation createDefaultRecommendation(ActivityResponse activity) {
+        log.info("createDefaultRecommendation for ", activity.getActivityId());
         return AIRecommendation.builder()
-                .activityId(activity.getExternalActivityId())
+                .activityId(activity.getActivityId())
                 .userId(activity.getUserId())
                 .activityType(activity.getActivityType())
                 .recommendation("Unable to generate detailed analysis")

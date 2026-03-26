@@ -34,7 +34,17 @@ export const syncActivities = () => {
 
 export const addActivity = (activity) => {
   const userId = localStorage.getItem("userId");
-  return api.post(`${ACT}/manual`, { ...activity, userId });
+  return api.post(`${ACT}/manual`, {
+    activityType: activity.type,
+    duration: activity.duration ? Number(activity.duration) : null,
+    caloriesBurned: activity.caloriesBurned ? Number(activity.caloriesBurned) : null,
+    distance: activity.distance ? Number(activity.distance) : null,
+    averageHeartRate: activity.averageHeartRate ? Number(activity.averageHeartRate) : null,
+    startTime: activity.startTime || new Date().toISOString().slice(0, 19),
+    endTime: activity.endTime || null,
+    source: activity.source || "MANUAL",
+    userId,
+  });
 };
 
 export const getActivityById = (activityId) =>
@@ -46,5 +56,8 @@ export const getUserRecommendations = () => {
   return api.get(`/recommendation/user/${userId}`);
 };
 
-export const getActivityDetail = (activityId) =>
+export const getActivityRecommendation = (activityId) =>
   api.get(`/recommendation/activity/${activityId}`);
+
+export const getActivityDetail = (activityId) =>
+  api.get(`${ACT}/activity/${activityId}`);  // ← fix: points to activity service

@@ -4,8 +4,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb+srv://nharshavardhan13_db_user:yjEtDCSMCgk98sQW@cluster0.p6zisdp.mongodb.net/activitydb?retryWrites=true&w=majority&appName=Cluster0
-      #      database: activitydb
+      uri: mongodb+srv://username:password@cluster0.p6zisdp.mongodb.net/activitydb?retryWrites=true&w=majority&appName=Cluster0
       auto-index-creation: true
 
   kafka:
@@ -22,7 +21,7 @@ server:
 
 strava:
   client-id: 211212
-  client-secret: b2afe25ed244c8ccef4067f1b89be73d03e3a619
+  client-secret: key
   redirect-uri: http://localhost:8082/login/oauth2/code/strava
 
 eureka:

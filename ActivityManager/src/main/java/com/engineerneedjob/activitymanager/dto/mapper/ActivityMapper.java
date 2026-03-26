@@ -10,6 +10,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ActivityMapper {
 
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "externalActivityId", source = "id")
     ActivityResponse toResponse(Activity activity);
 
     Activity fromRequest(ActivityRequest request);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { getActivityDetail } from "../services/api";
+import { getActivityDetail, getActivityRecommendation } from "../services/api"; // ← add import
 
 const ICON_MAP = {
   RUNNING: "🏃", WALKING: "🚶", CYCLING: "🚴",
@@ -24,21 +24,32 @@ const ActivityDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [activity, setActivity] = useState(null);
+  const [recommendation, setRecommendation] = useState(null); // ← separate state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetchAll = async () => {
       try {
-        const res = await getActivityDetail(id);
-        setActivity(res.data);
-      } catch {
-        setError("Could not load activity details.");
+        const [actRes, recRes] = await Promise.allSettled([
+          getActivityDetail(id),
+          getActivityRecommendation(id),
+        ]);
+
+        if (actRes.status === "fulfilled") {
+          setActivity(actRes.value.data);
+        } else {
+          setError("Could not load activity details.");
+        }
+
+        if (recRes.status === "fulfilled") {
+          setRecommendation(recRes.value.data); // null if no rec yet — that's fine
+        }
       } finally {
         setLoading(false);
       }
     };
-    fetch();
+    fetchAll();
   }, [id]);
 
   if (loading) return <div className="state-center"><div className="spinner" /><span>Loading…</span></div>;
@@ -55,7 +66,9 @@ const ActivityDetail = () => {
   const intensity = activity.duration > 0
     ? Math.round((Number(activity.caloriesBurned) || 0) / Number(activity.duration))
     : 0;
-  const hasRec = activity.recommendation || activity.improvements?.length || activity.suggestions?.length;
+
+  // Read rec fields from the separate recommendation object
+  const hasRec = recommendation?.recommendation || recommendation?.improvements?.length || recommendation?.suggestions?.length;
 
   return (
     <div className="detail-page">
@@ -106,24 +119,24 @@ const ActivityDetail = () => {
             <h3 className="rec-card-title">Coach Insights</h3>
           </div>
           <div className="rec-body">
-            {activity.recommendation && (
+            {recommendation.recommendation && (
               <RecSection label="Analysis">
-                <p className="rec-text">{activity.recommendation}</p>
+                <p className="rec-text">{recommendation.recommendation}</p>
               </RecSection>
             )}
-            {activity.improvements?.length > 0 && (
+            {recommendation.improvements?.length > 0 && (
               <RecSection label="Improvements">
-                <ul className="rec-list">{activity.improvements.map((item, i) => <li key={i}>{item}</li>)}</ul>
+                <ul className="rec-list">{recommendation.improvements.map((item, i) => <li key={i}>{item}</li>)}</ul>
               </RecSection>
             )}
-            {activity.suggestions?.length > 0 && (
+            {recommendation.suggestions?.length > 0 && (
               <RecSection label="Suggestions">
-                <ul className="rec-list">{activity.suggestions.map((item, i) => <li key={i}>{item}</li>)}</ul>
+                <ul className="rec-list">{recommendation.suggestions.map((item, i) => <li key={i}>{item}</li>)}</ul>
               </RecSection>
             )}
-            {activity.safety?.length > 0 && (
+            {recommendation.safety?.length > 0 && (
               <RecSection label="Safety Guidelines">
-                <ul className="rec-list">{activity.safety.map((item, i) => <li key={i}>{item}</li>)}</ul>
+                <ul className="rec-list">{recommendation.safety.map((item, i) => <li key={i}>{item}</li>)}</ul>
               </RecSection>
             )}
           </div>

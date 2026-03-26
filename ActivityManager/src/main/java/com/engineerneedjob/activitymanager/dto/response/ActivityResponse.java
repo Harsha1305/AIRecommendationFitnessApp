@@ -14,22 +14,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ActivityResponse {
+    private String id;                // ← add this
     private String userId;
-
     private ActivityType activityType;
-    private IntegrationProvider source; //STRAVA, GOOGLE_FIT, or MANUAL
-
-    private Integer duration;           // in minutes
-    private Integer caloriesBurned;     // from provider or calculated
-
-    private Double distance;            //add for running/cycling
-    private Integer averageHeartRate;   //add for gym/running
-
+    private IntegrationProvider source;
+    private Integer duration;
+    private Integer caloriesBurned;
+    private Double distance;
+    private Integer averageHeartRate;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-
-    private String externalActivityId;  //prevents duplicate imports from Strava
-
+    private String externalActivityId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
