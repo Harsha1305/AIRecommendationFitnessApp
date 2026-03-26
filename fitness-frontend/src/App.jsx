@@ -17,7 +17,7 @@ const Navbar = ({ user, onLogout }) => {
       <div className="navbar-inner">
         <div className="navbar-brand">
           <span className="brand-icon">⚡</span>
-          <span className="brand-name">FITPULSE</span>
+          <span className="brand-name">AIFitro</span>
         </div>
         <div className="navbar-right">
           <div className="user-chip">
