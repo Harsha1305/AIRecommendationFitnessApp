@@ -30,10 +30,6 @@ public class UserController {
     @GetMapping("/validate/{userId}")
     public ResponseEntity<Boolean> validateUser(@PathVariable String userId) {
         log.info("Validating userId: {}", userId);
-
-        if (aInUserService.existByUserId(userId))
-            return ResponseEntity.ok(true);
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+        return ResponseEntity.ok(aInUserService.existByKeyCloakId(userId)); // ✅ always 200
     }
 }

@@ -1,43 +1,59 @@
 spring:
   application:
-    name: AIAgentManager
-
-  data:
-    mongodb:
-      uri: mongodb+srv://username:password@cluster0.p6zisdp.mongodb.net/airecommedationdb?retryWrites=true&w=majority&appName=Cluster0
-#      database: airecommedationdb
-      auto-index-creation: true
-
-  kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      group-id: ai-agent-group
-      auto-offset-reset: earliest
-      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      properties:
-        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
-        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
-        spring.json.use.type.headers: false
-        spring.json.value.default.type: com.engineerneedjob.aiagentmanager.model.ActivityResponse
-        spring.json.trusted.packages: com.engineerneedjob.aiagentmanager.model
-    topic:
-      name: activity-events
+    name: ai-service
 
   config:
-    import: "optional:configserver:"
+    import: optional:configserver:http://localhost:8888
 
-gemini:
-  api:
-    url: gemini-url
-    key: api-key
-
-server:
-  port: 8083
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
+#  data:
+#    mongodb:
+#      uri: mongodb+srv://nharshavardhan13_db_user:yjEtDCSMCgk98sQW@cluster0.p6zisdp.mongodb.net/airecommedationdb?retryWrites=true&w=majority&appName=Cluster0
+##      database: airecommedationdb
+#      auto-index-creation: true
+#
+#  kafka:
+#    bootstrap-servers: localhost:9092
+#    consumer:
+#      group-id: ai-agent-group
+#      auto-offset-reset: earliest
+#      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+#      properties:
+#        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+#        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+#        spring.json.use.type.headers: false
+#        spring.json.value.default.type: com.engineerneedjob.aiagentmanager.model.ActivityResponse
+#        spring.json.trusted.packages: com.engineerneedjob.aiagentmanager.model
+#    topic:
+#      name: activity-events
+#
+##  kafka:
+##    bootstrap-servers: localhost:9092
+##    consumer:
+##      group-id: ai-agent-group
+##      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+##      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+##      properties:
+##        spring.json.use.headers: false
+##        spring.json.value.default.type: com.engineerneedjob.aiagentmanager.model.ActivityResponse
+##        spring.json.trusted.packages: "*"
+##    topic:
+##      name: activity-events
+#
+#  config:
+#    import: "optional:configserver:"
+#
+#gemini:
+#  api:
+#    url: /v1beta/models/gemini-2.5-flash:generateContent
+#    key: AIzaSyAA8tLcQgZk9eiTPgocDdYAuiermBla5xY
+#
+#server:
+#  port: 8083
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    prefer-ip-address: true

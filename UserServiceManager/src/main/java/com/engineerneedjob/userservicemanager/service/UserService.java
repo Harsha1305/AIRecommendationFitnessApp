@@ -7,4 +7,6 @@ public interface UserService {
     UserResponse save(UserRequest userRequest);
 
     Boolean existByUserId(String userId);
+
+    Boolean existByKeyCloakId(String keyCloakId);
 }

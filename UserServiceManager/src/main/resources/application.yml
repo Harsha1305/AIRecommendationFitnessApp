@@ -1,27 +1,30 @@
 spring:
   application:
-    name: UserServiceManager
-
-  datasource:
-    url: jdbc:postgresql://localhost:5432/user-fitness-db
-    username: username
-    password: password
+    name: user-service
 
   config:
-    import: "optional:configserver:"
+    import: optional:configserver:http://localhost:8888
 
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/user-fitness-db
+#    username: postgres
+#    password: root
+#
+#  config:
+#    import: "optional:configserver:"
+#
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    prefer-ip-address: true
 
 server:
   port: 8081

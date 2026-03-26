@@ -14,4 +14,7 @@ public interface ActivityRepository extends MongoRepository<Activity, String> {
     List<Activity> findByUserId(String userId);
 
     Optional<Activity> findById(String activityId);
+
+    List<Activity> findByUserIdContaining(String pattern);
+
 }

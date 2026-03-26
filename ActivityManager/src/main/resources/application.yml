@@ -1,36 +1,39 @@
 spring:
   application:
-    name: ActivityManager
+    name: activity-service
 
   config:
-    import: "optional:configserver:"
+    import: optional:configserver:http://localhost:8888
 
-  data:
-    mongodb:
-      uri: mongodb+srv://username:password@cluster0.p6zisdp.mongodb.net/activitydb?retryWrites=true&w=majority&appName=Cluster0
-#      database: activitydb
-      auto-index-creation: true
-
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
-    topic:
-      name: activity-events
-
-server:
-  port: 8082
-
-strava:
-  client-id: 211212
-  client-secret: secret-api-key
-  redirect-uri: http://localhost:8082/login/oauth2/code/strava
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
+#  config:
+#    import: "optional:configserver:"
+#
+#  data:
+#    mongodb:
+#      uri: mongodb+srv://nharshavardhan13_db_user:yjEtDCSMCgk98sQW@cluster0.p6zisdp.mongodb.net/activitydb?retryWrites=true&w=majority&appName=Cluster0
+##      database: activitydb
+#      auto-index-creation: true
+#
+#  kafka:
+#    bootstrap-servers: localhost:9092
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#
+#    topic:
+#      name: activity-events
+#
+#server:
+#  port: 8082
+#
+#strava:
+#  client-id: 211212
+#  client-secret: b2afe25ed244c8ccef4067f1b89be73d03e3a619
+#  redirect-uri: http://localhost:8082/login/oauth2/code/strava
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    prefer-ip-address: true

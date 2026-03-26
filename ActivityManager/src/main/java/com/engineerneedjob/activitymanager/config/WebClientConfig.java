@@ -25,7 +25,7 @@ public class WebClientConfig {
     public WebClient userServiceWebClient(WebClient.Builder webClientBuilder) {
         log.info("WebClient has been initialized for UserService");
         return webClientBuilder
-                .baseUrl("http://USERSERVICEMANAGER")  // must match spring.application.name exactly
+                .baseUrl("http://USER-SERVICE")  // must match spring.application.name exactly
                 .build();
     }
 

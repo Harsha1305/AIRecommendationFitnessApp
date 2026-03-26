@@ -21,16 +21,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse save(UserRequest userRequest) {
         if (userRepository.existsByEmail(userRequest.getEmail()))
-            throw new IllegalArgumentException("Email already in use");
+            return userMapper.toResponse(userRepository.findByEmail(userRequest.getEmail()));
 
         User user = userMapper.toEntity(userRequest);
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        user.setKeycloakId(userRequest.getKeycloakId());
         return userMapper.toResponse(userRepository.save(user));
     }
 
     @Override
     public Boolean existByUserId(String userId) {
         return userRepository.existsByEmail(userId);
+    }
+
+    @Override
+    public Boolean existByKeyCloakId(String keyCloakId) {
+        return userRepository.existsByKeycloakId(keyCloakId);
     }
 
 
